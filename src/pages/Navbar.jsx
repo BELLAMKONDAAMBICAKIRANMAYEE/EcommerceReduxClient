@@ -1,16 +1,19 @@
-// Navbar.jsx
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 
 function Navbar() {
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("admin"));
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const admin = JSON.parse(localStorage.getItem("admin"));
+    setUser(admin);
+  }, []);
 
   function logout() {
     localStorage.removeItem("admin");
+    setUser(null);
     navigate("/login");
   }
 
@@ -33,7 +36,9 @@ function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"><i class="fa-solid fa-bars mt-1"></i></span>
+          <span className="navbar-toggler-icon">
+            <i className="fa-solid fa-bars mt-1"></i>
+          </span>
         </button>
 
         {/* NAVBAR LINKS */}
@@ -51,7 +56,6 @@ function Navbar() {
 
             {!user ? (
               <>
-              
                 <li className="nav-item">
                   <Link className="nav-link custom-link" to="/login">
                     Login
@@ -66,18 +70,17 @@ function Navbar() {
               </>
             ) : (
               <>
-              <li className="nav-item">
-              <Link className="nav-link custom-link" to="/dashboard">
-                Dashboard
-              </Link>
-            </li>
+                <li className="nav-item">
+                  <Link className="nav-link custom-link" to="/dashboard">
+                    Dashboard
+                  </Link>
+                </li>
+
                 <li className="nav-item">
                   <Link className="nav-link custom-link" to="/products">
                     Products
                   </Link>
                 </li>
-
-                
 
                 {/* ADMIN DROPDOWN */}
                 <li className="nav-item dropdown">

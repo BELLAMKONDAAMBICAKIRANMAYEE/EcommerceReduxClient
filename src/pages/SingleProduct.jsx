@@ -19,7 +19,7 @@ function SingleProduct() {
       );
 
       setProduct(res.data.product);
-
+console.log(res.data.product)
     } catch (error) {
       console.log(error.response?.data || error.message);
     }

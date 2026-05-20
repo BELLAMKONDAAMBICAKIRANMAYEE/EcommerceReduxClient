@@ -30,24 +30,28 @@ function App() {
           path="/"
           element={<Home />}
         />
-<Route
-  path="/dashboard"
-  element={
-   
-      <Dashboard />
+        <Route
+          path="/dashboard"
+          element={
 
-  }
-/>
+           <ProtectedRoute>
+             <Dashboard />
+
+           </ProtectedRoute>
+          }
+        />
         <Route
           path="/products"
           element={
-           
-              <Products />
-           
+<ProtectedRoute>
+  <Products />
+  </ProtectedRoute>
+            
+
           }
         />
 
-        
+
 
         <Route
           path="/login"
@@ -71,36 +75,44 @@ function App() {
         <Route
           path="/add-product"
           element={
-           
+
+            <ProtectedRoute>
               <AddProduct />
-           
+            </ProtectedRoute>
+
           }
         />
 
         <Route
           path="/admin-products"
           element={
-           
+
+            <ProtectedRoute>
               <AdminProducts />
-           
+            </ProtectedRoute>
+
           }
         />
 
         <Route
           path="/single/:id"
           element={
-       
+
+            <ProtectedRoute>
               <SingleProduct />
-           
+            </ProtectedRoute>
+
           }
         />
 
         <Route
           path="/edit/:id"
           element={
-       
+
+            <ProtectedRoute>
               <EditProduct />
-           
+            </ProtectedRoute>
+
           }
         />
 
