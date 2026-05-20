@@ -33,7 +33,7 @@ function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"><i class="fa-solid fa-bars mt-1"></i></span>
         </button>
 
         {/* NAVBAR LINKS */}

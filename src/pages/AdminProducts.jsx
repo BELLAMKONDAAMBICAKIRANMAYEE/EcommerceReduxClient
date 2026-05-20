@@ -156,18 +156,18 @@ function AdminProducts() {
           <div className="row g-4">
 
             {products.map((item) => (
+              
               <div
                 className="col-12 col-sm-6 col-lg-4"
                 key={item.itemid}
               >
                 <div className="product-card">
 
-                  <img
-                    src={item.image}
-                    alt=""
-                    className="product-img"
-                  />
-
+<img
+  src={item.image}
+  alt={item.itemname}
+  className="product-img"
+/>
                   <div className="product-body">
 
                     <h2 className="product-title">
