@@ -1,85 +1,185 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function VerifyOtp() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  const tokenFromRegister = location.state?.token || ""
+  const tokenFromRegister = location.state?.token || "";
 
   const [otpData, setOtpData] = useState({
     otp: "",
-    token: tokenFromRegister
-  })
+    token: tokenFromRegister,
+  });
+
+  const [message, setMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
 
   function handleChange(e) {
     setOtpData({
       ...otpData,
-      [e.target.name]: e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   }
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-
       const payload = {
         otp: otpData.otp,
-        token: otpData.token
-      }
-
-      console.log("Sending:", payload)
+        token: otpData.token,
+      };
 
       const res = await axios.post(
         "https://ecomflask.duckdns.org/api/admin/verify-otp",
         payload,
         {
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
-      )
+      );
 
-      console.log(res.data)
+      console.log(res.data);
 
-      alert("Admin Registered Successfully")
+      setMessage("Admin Registered Successfully");
+      setAlertType("success");
 
-      navigate("/login")
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
 
     } catch (error) {
-      console.log(error.response?.data || error.message)
-      alert("Invalid OTP")
+      console.log(error.response?.data || error.message);
+
+      setMessage("Invalid OTP");
+      setAlertType("danger");
     }
   }
 
   return (
-    <div>
+    <>
+      {/* Bootstrap 5.0.2 */}
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
 
-      <h1>Verify OTP</h1>
+      <style>{`
+        .otp-page{
+          min-height:100vh;
+          background:#f1f5f9;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          padding:20px;
+        }
 
-      <form onSubmit={handleSubmit}>
+        .otp-card{
+          width:100%;
+          max-width:450px;
+          background:white;
+          padding:40px;
+          border-radius:20px;
+          box-shadow:0 8px 20px rgba(0,0,0,0.1);
+        }
 
-        <input
-          type="text"
-          name="otp"
-          placeholder="Enter OTP"
-          value={otpData.otp}
-          onChange={handleChange}
-        />
+        .otp-title{
+          text-align:center;
+          font-size:36px;
+          font-weight:bold;
+          color:#0f172a;
+          margin-bottom:30px;
+        }
 
-        <br /><br />
+        .form-label{
+          font-weight:600;
+          color:#334155;
+        }
 
-        <button type="submit">
-          Verify OTP
-        </button>
+        .form-control{
+          border-radius:10px;
+          padding:12px;
+        }
 
-      </form>
+        .verify-btn{
+          width:100%;
+          background:#0f172a;
+          color:white;
+          border:none;
+          padding:14px;
+          border-radius:10px;
+          font-size:18px;
+          font-weight:600;
+          transition:0.3s;
+        }
 
-    </div>
-  )
+        .verify-btn:hover{
+          background:#38bdf8;
+        }
+
+        @media(max-width:768px){
+
+          .otp-card{
+            padding:25px;
+          }
+
+          .otp-title{
+            font-size:28px;
+          }
+        }
+      `}</style>
+
+      <div className="otp-page">
+
+        <div className="otp-card">
+
+          <h1 className="otp-title">
+            Verify OTP
+          </h1>
+
+          {message && (
+            <div className={`alert alert-${alertType}`}>
+              {message}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+
+            <div className="mb-4">
+
+              <label className="form-label">
+                Enter OTP
+              </label>
+
+              <input
+                type="text"
+                name="otp"
+                className="form-control"
+                placeholder="Enter OTP"
+                value={otpData.otp}
+                onChange={handleChange}
+                required
+              />
+
+            </div>
+
+            <button
+              type="submit"
+              className="verify-btn"
+            >
+              Verify OTP
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+    </>
+  );
 }
 
-export default VerifyOtp
+export default VerifyOtp;

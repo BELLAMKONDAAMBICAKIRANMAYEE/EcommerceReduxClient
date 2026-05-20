@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
+
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const [user, setUser] = useState(null);
 
+  // RUN ON EVERY ROUTE CHANGE
   useEffect(() => {
+
     const admin = JSON.parse(localStorage.getItem("admin"));
+
     setUser(admin);
-  }, []);
+
+  }, [location]);
 
   function logout() {
+
     localStorage.removeItem("admin");
+
     setUser(null);
+
     navigate("/login");
   }
 
@@ -32,9 +42,6 @@ function Navbar() {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon">
             <i className="fa-solid fa-bars mt-1"></i>
@@ -82,19 +89,19 @@ function Navbar() {
                   </Link>
                 </li>
 
-                {/* ADMIN DROPDOWN */}
                 <li className="nav-item dropdown">
+
                   <span
                     className="nav-link dropdown-toggle custom-link"
                     role="button"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false"
                     style={{ cursor: "pointer" }}
                   >
                     Admin
                   </span>
 
                   <ul className="dropdown-menu">
+
                     <li>
                       <Link className="dropdown-item" to="/add-product">
                         Add Product
@@ -106,11 +113,15 @@ function Navbar() {
                         Admin Products
                       </Link>
                     </li>
+
                   </ul>
                 </li>
 
                 <li className="nav-item">
-                  <button className="logout-btn" onClick={logout}>
+                  <button
+                    className="logout-btn"
+                    onClick={logout}
+                  >
                     Logout
                   </button>
                 </li>

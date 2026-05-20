@@ -69,7 +69,7 @@ function Login() {
       );
 
       setTimeout(() => {
-        navigate("/admin-products");
+        navigate("/dashboard");
       }, 1500);
 
     } catch (error) {

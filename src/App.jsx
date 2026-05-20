@@ -15,7 +15,7 @@ import AddProduct from './pages/AddProduct'
 import AdminProducts from './pages/AdminProducts'
 import SingleProduct from './pages/SingleProduct'
 import EditProduct from './pages/EditProduct'
-
+import PageNotFound from './pages/PageNotFound'
 function App() {
 
   return (
@@ -34,19 +34,19 @@ function App() {
           path="/dashboard"
           element={
 
-           <ProtectedRoute>
-             <Dashboard />
+            <ProtectedRoute>
+              <Dashboard />
 
-           </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/products"
           element={
-<ProtectedRoute>
-  <Products />
-  </ProtectedRoute>
-            
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+
 
           }
         />
@@ -115,7 +115,9 @@ function App() {
 
           }
         />
-
+<Route
+path="*"
+element={<PageNotFound/>}/>
       </Routes>
 
     </BrowserRouter>
